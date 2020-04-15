@@ -1,4 +1,4 @@
-# Created by Shlyankin Nickolay
+# Created by Shlyankin Nickolay & Vladimir Michailov
 from PyQt5 import QtWidgets
 from mydesign import Ui_MainWindow
 from util import TaskCrankNicholson, TaskImplicit
@@ -16,7 +16,7 @@ class mywindow(QtWidgets.QMainWindow):
         self.graphWidget.setBackground('w')
         self.graphWidget.setLabel('left', 'Температура (К)', color='red', size=30)
         self.graphWidget.setLabel('bottom', 'Радиус (см)', color='red', size=30)
-        self.ui.label_current_time.setText("Индекс времени k = " + str(0))
+        self.ui.label_current_time.setText("Индекс времени k = ")
         self.ui.sliderImage.valueChanged.connect(self.plotNextGraph)
         self.ui.buttonCaluclate.clicked.connect(self.calculate)
         self.ui.buttonClear.clicked.connect(self.clear)

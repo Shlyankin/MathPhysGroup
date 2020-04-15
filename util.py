@@ -1,4 +1,4 @@
-# Created by Shlyankin Nickolay
+# Created by Shlyankin Nickolay & Vladimir Michailov
 import scipy.special as sp
 import math
 import numpy as np

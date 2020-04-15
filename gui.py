@@ -40,7 +40,8 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.label_gridInfo.setText("")
         self.ui.label_max_t.setText("0")
         self.ui.sliderImage.setMaximum(0)
-        self.ui.label_current_time.setText("Индекс времени k = " + str(0))
+        self.ui.label_current_time.setText("Индекс времени k = ")
+        self.ui.label_current_time_2.setText("Время t = ")
 
     def calculate(self):
         self.ui.label_gridInfo.setStyleSheet("color: rgb(0, 0, 0);")
@@ -62,6 +63,8 @@ class mywindow(QtWidgets.QMainWindow):
             self.tasks.append(TaskImplicit(R, l, k, c, alpha, T, Uc, K, I))
             self.graphWidget.clear()
             self.legend_del()
+            self.ui.label_current_time.setText("Индекс времени k = " + str(0))
+            self.ui.label_current_time_2.setText("Время t = " + str(0) + " c")
             for task in self.tasks:
                 answer = task.calculate()
                 answer_analytic = task.analytic_decision()
@@ -96,6 +99,7 @@ class mywindow(QtWidgets.QMainWindow):
         self.legend_del()
         t = self.ui.sliderImage.value()
         self.ui.label_current_time.setText("Индекс времени k = " + str(t))
+        self.ui.label_current_time_2.setText("Время t = " + str(round(t*self.tasks[0].ht, 2)) + " c")
         self.graphWidget.clear()
         for task in self.tasks:
             y = task.answer[t]

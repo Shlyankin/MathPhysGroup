@@ -39,7 +39,6 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.label_gridInfo.setStyleSheet("color: rgb(0, 0, 0);")
         self.ui.label_gridInfo.setText("")
         self.ui.label_max_t.setText("0")
-        self.ui.sliderImage.setMaximum(0)
         self.ui.label_current_time.setText("Индекс времени k = ")
         self.ui.label_current_time_2.setText("Время t = ")
 
@@ -75,8 +74,6 @@ class mywindow(QtWidgets.QMainWindow):
                                                "\n" + task.name + " absolute error: " + str(task.calculateAbsError()) +
                                                " isStable: " + str(task.isStable()))
                 self.plotGraph(x, y, task.name, task.color)
-            self.ui.label_gridInfo.setText(self.ui.label_gridInfo.text() +
-                                           "\nhr = " + str(self.tasks[0].hr) + "\tht = " + str(self.tasks[0].ht))
             self.ui.sliderImage.setValue(0)
             self.ui.label_max_t.setText(str(len(answer) - 1))
             self.ui.sliderImage.setMaximum(len(answer) - 1)
@@ -98,6 +95,7 @@ class mywindow(QtWidgets.QMainWindow):
             self.l.updateSize()
 
     def plotNextGraph(self):
+        if len(self.tasks) == 0: return
         self.legend_del()
         t = self.ui.sliderImage.value()
         self.ui.label_current_time.setText("Индекс времени k = " + str(t))

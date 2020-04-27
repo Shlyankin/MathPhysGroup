@@ -61,7 +61,7 @@ class Task(object):
 class TaskExplicit(Task):
 
     def isStable(self):
-        return (1 - (2 * self.k * self.ht) / ((self.hr ** 2) * self.c) - (self.alpha * self.ht) / (self.c * self.l)) > 0
+        return (1 - (4 * self.k * self.ht) / ((self.hr ** 2) * self.c) - (2 * self.alpha * self.ht) / (self.c * self.l)) > 0
 
     def calculate(self):
         for k in range(self.K):

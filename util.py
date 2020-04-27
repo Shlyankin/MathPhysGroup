@@ -1,4 +1,4 @@
-# Created by Shlyankin Nickolay & Vladimir Michailov
+# Created by Shlyankin Nickolay & Vladimir Michailov & Alena Zahodyakina
 import scipy.special as sp
 import math
 import numpy as np
@@ -58,8 +58,47 @@ class Task(object):
             x[i] = alpha[i] * x[i + 1] + beta[i]
         return x
 
+class TaskExplicit(Task):
+
+    def isStable(self):
+        return (1 - (2 * self.k * self.ht) / ((self.hr ** 2) * self.c) - (self.alpha * self.ht) / (self.c * self.l)) > 0
+
+    def calculate(self):
+        for k in range(self.K):
+            local_answer = np.zeros(self.I, np.float64)
+            if k == 0:
+                for i in range(self.I - 1):
+                    local_answer[i] = self.psi[i]
+                local_answer[self.I - 1] = self.Uc
+            else:
+                local_answer[0] = self.answer[k-1][1] * (4 * self.k * self.ht / ((self.hr ** 2) * self.c)) + \
+                                  self.answer[k-1][0] * (1 - (4 * self.k * self.ht) / (self.c * (self.hr ** 2)) - (2 * self.alpha * self.ht) / (self.l * self.c)) + \
+                                  ((2 * self.alpha * self.ht * self.Uc) / (self.l * self.c))
+                for i in range(1, self.I - 1):
+                    local_answer[i] = self.answer[k-1][i+1] * (self.k * self.ht / ((self.hr ** 2) * self.c) + self.k * self.ht / (2 * self.hr * self.r[i] * self.c)) + \
+                                      self.answer[k-1][i] * (1 - (2 * self.ht * self.k) / ((self.hr ** 2) * self.c) - (2 * self.alpha * self.ht) / (self.l * self.c)) + \
+                                      self.answer[k-1][i-1] * (self.k * self.ht / ((self.hr ** 2) * self.c) - self.k * self.ht / (2 * self.hr * self.r[i] * self.c)) + \
+                                      (2 * self.alpha * self.ht * self.Uc / (self.l * self.c))
+                local_answer[self.I - 1] = self.Uc
+            self.answer.append(local_answer)
+        return self.answer
+
+    def calculateAbsError(self):
+        if self.answer is not None and self.answer_analytic is not None:
+            return np.max(np.abs(np.array(self.answer_analytic) - np.array(self.answer)))
+
+    def __init__(self, R, l, k, c, alpha, T, Uc, K, I):
+        super(TaskExplicit, self).__init__(R, l, k, c, alpha, T, Uc, K, I)
+        self.name = "Явная схема"
+        self.color = '000'
+        self.answer_analytic = []
+        self.answer = []
+
 class TaskImplicit(Task):
     """docstring"""
+
+    def isStable(self):
+        return True
 
     def calculate(self):
         for k in range(1, self.K):
@@ -136,6 +175,9 @@ class TaskImplicit(Task):
 
 class TaskCrankNicholson(Task):
     """docstring"""
+
+    def isStable(self):
+        return (1 - (2 * self.k * self.ht) / ((self.hr ** 2) * self.c) - (self.alpha * self.ht) / (self.c * self.l)) > 0
 
     def calculate(self):
         for k in range(1, self.K):
@@ -215,5 +257,3 @@ class TaskCrankNicholson(Task):
                         self.b_diag.append(self.A[i][j])
         self.answer_analytic = []
         self.answer = []
-
-

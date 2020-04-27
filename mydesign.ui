@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>908</width>
-    <height>550</height>
+    <width>931</width>
+    <height>573</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -371,7 +371,7 @@
      <rect>
       <x>10</x>
       <y>460</y>
-      <width>561</width>
+      <width>371</width>
       <height>51</height>
      </rect>
     </property>
@@ -390,13 +390,6 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="label_gridInfo">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -404,7 +397,7 @@
      <rect>
       <x>240</x>
       <y>30</y>
-      <width>651</width>
+      <width>671</width>
       <height>431</height>
      </rect>
     </property>
@@ -507,13 +500,26 @@
      <string>Время t = </string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_gridInfo">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>470</y>
+      <width>521</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>908</width>
+     <width>931</width>
      <height>18</height>
     </rect>
    </property>

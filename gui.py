@@ -1,7 +1,7 @@
-# Created by Shlyankin Nickolay & Vladimir Michailov
+# Created by Shlyankin Nickolay & Vladimir Michailov & Alena Zahodyakina
 from PyQt5 import QtWidgets
 from mydesign import Ui_MainWindow
-from util import TaskCrankNicholson, TaskImplicit
+from util import TaskCrankNicholson, TaskImplicit, TaskExplicit
 import pyqtgraph as pg
 import sys
 
@@ -57,10 +57,11 @@ class mywindow(QtWidgets.QMainWindow):
             K =     int(  self.ui.edit_K.text())
             I =     int(  self.ui.edit_I.text())
             self.ui.label_gridInfo.setStyleSheet("color: rgb(255, 0, 0);")
-            self.ui.label_gridInfo.setText("")
             self.tasks = []
             self.tasks.append(TaskCrankNicholson(R, l, k, c, alpha, T, Uc, K, I))
             self.tasks.append(TaskImplicit(R, l, k, c, alpha, T, Uc, K, I))
+            self.tasks.append(TaskExplicit(R, l, k, c, alpha, T, Uc, K, I))
+            self.ui.label_gridInfo.setText("ht: " + str(self.tasks[0].ht) + " hr: " + str(self.tasks[0].hr))
             self.graphWidget.clear()
             self.legend_del()
             self.ui.label_current_time.setText("Индекс времени k = " + str(0))
@@ -71,7 +72,8 @@ class mywindow(QtWidgets.QMainWindow):
                 y = answer[0]
                 x = task.r
                 self.ui.label_gridInfo.setText(self.ui.label_gridInfo.text() +
-                                               "\n" + task.name + " absolute error: " + str(task.calculateAbsError()))
+                                               "\n" + task.name + " absolute error: " + str(task.calculateAbsError()) +
+                                               " isStable: " + str(task.isStable()))
                 self.plotGraph(x, y, task.name, task.color)
             self.ui.label_gridInfo.setText(self.ui.label_gridInfo.text() +
                                            "\nhr = " + str(self.tasks[0].hr) + "\tht = " + str(self.tasks[0].ht))
@@ -120,4 +122,3 @@ application = mywindow()
 application.show()
 
 sys.exit(app.exec())
-
